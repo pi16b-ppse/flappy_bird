@@ -33,3 +33,18 @@ pipe[0] = {
 var xPos = 10;
 var yPos = 150;
 var grav = 1.5;
+
+var gap = 90;
+var score = 0; //счёт
+
+function draw()
+{
+    ctx.drawImage(bg, 0, 0);
+    for(var i = 0; i < pipe.length; i++) 
+    {
+	    ctx.drawImage(pipeUp, pipe[i].x, pipe[i].y);
+        ctx.drawImage(pipeBottom, pipe[i].x, pipe[i].y + pipeUp.height + gap);
+        pipe[i].x--;
+        
+    }
+}
