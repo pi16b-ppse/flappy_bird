@@ -13,6 +13,27 @@ fg.src = "img/fg.png";
 pipeUp.src = "img/pipeUp.png";
 pipeBottom.src = "img/pipeBottom.png";
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var gap = 90;
 var score = 0; //счёт
 
