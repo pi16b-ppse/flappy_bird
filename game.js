@@ -46,5 +46,16 @@ function draw()
         ctx.drawImage(pipeBottom, pipe[i].x, pipe[i].y + pipeUp.height + gap);
         pipe[i].x--;
         
+	if(pipe[i].x == 125) 
+	{
+            pipe.push({
+	    x : cvs.width,
+	    y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height });
+        }
+	
+	if(pipe[i].x == 5) 
+	{
+	    score++;
+	}
     }
 }
