@@ -15,3 +15,9 @@ pipeBottom.src = "img/pipeBottom.png";
 
 var gap = 90;
 var score = 0; //счёт
+
+function draw()
+{
+    ctx.drawImage(bg, 0, 0);
+    
+}
