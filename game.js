@@ -16,16 +16,17 @@ pipeBottom.src = "img/pipeBottom.png";
 // При нажатии на какую-либо кнопку
 document.addEventListener("keydown", moveUp);
 
-function moveUp() {
- yPos -= 25;
+function moveUp()
+{
+    yPos -= 25;
 }
 
 // Создание блоков
 var pipe = [];
 
 pipe[0] = {
- x : cvs.width,
- y : 0
+    x : cvs.width,
+    y : 0
 }
 
 // Позиция птички
