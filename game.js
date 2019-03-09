@@ -12,3 +12,10 @@ bg.src = "img/bg.png";
 fg.src = "img/fg.png";
 pipeUp.src = "img/pipeUp.png";
 pipeBottom.src = "img/pipeBottom.png";
+
+// При нажатии на какую-либо кнопку
+document.addEventListener("keydown", moveUp);
+
+function moveUp() {
+ yPos -= 25;
+}
