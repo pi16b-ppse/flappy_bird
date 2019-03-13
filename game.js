@@ -74,7 +74,7 @@ function draw()
     /*вывод счёта*/
     ctx.fillStyle = "#000";
     ctx.font = "24px Verdana";
-    ctx.fillText("Счет: " + score, 10, cvs.height - 20);
+    ctx.fillText("Счет: " + score, 10, cvs.height - 10);
 	
     yPos += grav; /*птичка будет  "падать" на 1.5 пикселя вниз*/
 
