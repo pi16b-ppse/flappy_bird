@@ -71,6 +71,11 @@ function draw()
     ctx.drawImage(fg, 0, cvs.height - fg.height); /*отрисовка переднего фона*/
     ctx.drawImage(bird, xPos, yPos); /*отрисовка птички*/
 
+    /*вывод счёта*/
+    ctx.fillStyle = "#000";
+    ctx.font = "24px Verdana";
+    ctx.fillText("Счет: " + score, 10, cvs.height - 20);
+	
     yPos += grav; /*птичка будет  "падать" на 1.5 пикселя вниз*/
 
     requestAnimationFrame(draw); /*реализация анимации*/
