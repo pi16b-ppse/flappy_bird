@@ -1,84 +1,158 @@
-var cvs = document.getElementById("canvas"); /*подключение html-дока по id canvas*/
-var ctx = cvs.getContext("2d"); /*вид игры*/
+/**
+ * @description Получение элемента по его id
+   @type {object}
+*/
+var cvs = document.getElementById("canvas");
 
-/*инициализация объектов изображений*/
+/**
+ * @description Установка в 2D
+   @type {object}
+*/
+var ctx = cvs.getContext("2d");
+
+/**
+ * @description Инициализация изображения Птички
+   @type {object}
+*/
 var bird = new Image();
+
+/**
+ * @description Инициализация изображения Заднего Фона
+   @type {object}
+*/
 var bg = new Image();
+
+/**
+ * @description Инициализация изображения Переднего Ландшафта
+   @type {object}
+*/
 var fg = new Image();
+
+/**
+ * @description Инициализация изображения Верхней Трубы
+   @type {object}
+*/
 var pipeUp = new Image();
+
+/**
+ * @description Инициализация изображения Нижней трубы
+   @type {object}
+*/
 var pipeBottom = new Image();
 
-/*загрузка изображений*/
+/**
+ * @description Инициализация gap
+   @type {integer}
+*/
+var gap = 90;
+
+/**
+ * @description Создание массива блоков
+   @type {Array} 
+*/
+var pipe = [];
+
+/**
+ * @description Инициализация счёта в игре
+   @type {integer}
+*/
+var score = 0;
+
+/**
+ * @description Х позиция птички
+   @type {integer}
+*/
+var xPos = 10;
+
+/**
+ * @description Y позиция птички
+   @type {integer}
+*/
+var yPos = 150;
+
+/**
+ * @description Значение с которым птичка будет падать
+   @type {float}
+*/
+var grav = 1.5;
+
 bird.src = "img/bird.png";
 bg.src = "img/bg.png";
 fg.src = "img/fg.png";
 pipeUp.src = "img/pipeUp.png";
 pipeBottom.src = "img/pipeBottom.png";
 
-var gap = 90; /*отступ между блоками*/
-var score = 0; /*счёт*/
-
-/*При нажатии на какую-либо кнопку*/
+/**
+ * @description При нажатии на какую-либо кнопку запуск функции moveUp
+*/
 document.addEventListener("keydown", moveUp);
 
-function moveUp() /*подпрыгивание птички*/
-{
+/**
+ * @description При нажатии на любую клавишу заставляет птичку "подпрыгнуть"
+*/
+function moveUp() {
     yPos -= 25;
 }
 
-/*создание блоков*/
-var pipe = [];
-
-pipe[0] = { /*позиция 1го блока*/
+/**
+ * @description Создание массива блоков
+*/
+pipe[0] = {
     x : cvs.width,
     y : 0
 }
 
-/*позиция птички*/
-var xPos = 10;
-var yPos = 150;
-var grav = 1.5;
-
-function draw()
+/**
+ * @description Отрисовка и главная логика игры, происходит создание блоков, отслеживание прикосновений, подсчет и вывод очков
+*/
+function draw() 
 {
-    ctx.drawImage(bg, 0, 0); /*отрисовка заднего фона*/
-    for(var i = 0; i < pipe.length; i++) 
-    {	    
-        ctx.drawImage(pipeUp, pipe[i].x, pipe[i].y); /*отрисовка верхнего блока*/
-        ctx.drawImage(pipeBottom, pipe[i].x, pipe[i].y + pipeUp.height + gap); /*отрисовка нижнего блока*/
-        pipe[i].x--; /*блок отодвигается по х*/
-        
-	if(pipe[i].x == 125) /*создание нового блока если текущий находится в точке 125 по х*/
-	{
-	    /*добавление блоков в массив*/	
-            pipe.push({
-	        x : cvs.width,
-	        y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height });
-        }
-	    
-	/*отслеживание прикосновений птички*/
-	if(xPos + bird.width >= pipe[i].x && xPos <= pipe[i].x + pipeUp.width && (yPos <= pipe[i].y + pipeUp.height
-	|| yPos + bird.height >= pipe[i].y + pipeUp.height + gap) || yPos + bird.height >= cvs.height - fg.height) 
-        {
-	    location.reload(); /*перезагрузка страницы*/
-	}
-	
-	if(pipe[i].x == 5) /*добавление очков*/
-	{
-	    score++;
-	}
-    }
-    ctx.drawImage(fg, 0, cvs.height - fg.height); /*отрисовка переднего фона*/
-    ctx.drawImage(bird, xPos, yPos); /*отрисовка птички*/
-	
-    /*вывод счёта*/
-    ctx.fillStyle = "#000";
-    ctx.font = "24px Verdana";
-    ctx.fillText("Счет: " + score, 10, cvs.height - 20);
-  
-    yPos += grav; /*птичка будет  "падать" на 1.5 пикселя вниз*/
+    ctx.drawImage(bg, 0, 0);
 
-    requestAnimationFrame(draw); /*реализация анимации*/
+    for(var i = 0; i < pipe.length; i++) 
+    {
+        ctx.drawImage(pipeUp, pipe[i].x, pipe[i].y);
+	ctx.drawImage(pipeBottom, pipe[i].x, pipe[i].y + pipeUp.height + gap);
+
+	pipe[i].x--;
+
+
+	if(pipe[i].x == 125) 
+	{
+		pipe.push({
+		x : cvs.width,
+		y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+		});
+	}
+
+	// Отслеживание прикосновений
+    if(xPos + bird.width >= pipe[i].x
+    && xPos <= pipe[i].x + pipeUp.width
+    && (yPos <= pipe[i].y + pipeUp.height
+    || yPos + bird.height >= pipe[i].y + pipeUp.height + gap) || yPos + bird.height >= cvs.height - fg.height) 
+    {
+	location.reload(); // Перезагрузка страницы
+    }
+
+    if(pipe[i].x == 5) 
+    {
+	score++;
+    }
 }
 
-pipeBottom.onload = draw; /*метод draw вызывается, если отрисована данная картинка*/
+ctx.drawImage(fg, 0, cvs.height - fg.height);
+ctx.drawImage(bird, xPos, yPos);
+
+yPos += grav;
+
+ctx.fillStyle = "#000";
+ctx.font = "24px Verdana";
+ctx.fillText("Счет: " + score, 10, cvs.height - 20);
+
+requestAnimationFrame(draw);
+}
+
+/**
+ * @description Обеспечивает запуск основной функции по загрузке страницы
+*/
+pipeBottom.onload = draw; 
